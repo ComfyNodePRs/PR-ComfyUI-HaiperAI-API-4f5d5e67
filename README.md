@@ -35,7 +35,7 @@ This is a custom node that allows you to use the Haiper AI API in ComfyUI. Haipe
 
 ## Nodes
 
-### ImgBBUpload
+### ImgBB Upload
 
 This node is used to upload an image to ImgBB and return the URL. We need this because Haiper API currently only supports image urls as input.
 To use this node, you need to have an ImgBB API key. Create an account and get one [here](https://api.imgbb.com/).
@@ -44,7 +44,7 @@ To use this node, you need to have an ImgBB API key. Create an account and get o
   <img src="./assets/ImgBBUpload.png" alt="HaiperAI Image2Video" width="350">
 </p>
 
-### Haiper Image2Video
+### Haiper Image to Video
 
 This node is used to generate a video from an image.
 
@@ -52,7 +52,7 @@ This node is used to generate a video from an image.
   <img src="./assets/Image2Video.png" alt="HaiperAI Image2Video" width="800">
 </p>
 
-### Haiper Text2Video
+### Haiper Text to Video
 
 This node is used to generate a video from a text prompt.
 
@@ -60,7 +60,7 @@ This node is used to generate a video from a text prompt.
   <img src="./assets/Text2Video.png" alt="HaiperAI Text2Video" width="800">
 </p>
 
-### Haiper Text2Image
+### Haiper Text to Image
 
 This node is used to generate four images from a text prompt.
 
