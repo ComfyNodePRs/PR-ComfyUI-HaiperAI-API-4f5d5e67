@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-haiper-api"
+description = "This custom node allows you to use the HaiperAI API."
+version = "1.0.2"
+license = {file = "LICENSE"}
+dependencies = [requests", "numpy", "Pillow"]
+
+[project.urls]
+Repository = "https://github.com/Haiper-ai/ComfyUI-HaiperAI-API"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = "haiperai"
+DisplayName = "ComfyUI-HaiperAI-API"
+Icon = "https://cdnvb5.haiper.ai/public/images/logo.png"
