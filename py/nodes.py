@@ -16,7 +16,7 @@ NODE_CLASS_MAPPINGS = {
 # A dictionary that contains the friendly/humanly readable titles for the nodes
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ImgBBUpload": "ImgBB Upload",
-    "HaiperImage2Video": "Image to Video",
-    "HaiperText2Video": "Text to Video",
-    "HaiperText2Image": "Text to Image",
+    "HaiperImage2Video": "Haiper Image to Video",
+    "HaiperText2Video": "Haiper Text to Video",
+    "HaiperText2Image": "Haiper Text to Image",
 }

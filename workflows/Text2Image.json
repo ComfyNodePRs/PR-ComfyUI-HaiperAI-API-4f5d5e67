@@ -3,69 +3,6 @@
   "last_link_id": 9,
   "nodes": [
     {
-      "id": 1,
-      "type": "HaiperText2Image",
-      "pos": [
-        370,
-        243
-      ],
-      "size": [
-        315,
-        306
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "output_image_dir_path",
-          "type": "STRING",
-          "links": [
-            2,
-            3,
-            4,
-            5
-          ],
-          "slot_index": 0
-        },
-        {
-          "name": "output_image_0_path",
-          "type": "STRING",
-          "links": [],
-          "slot_index": 1
-        },
-        {
-          "name": "output_image_1_path",
-          "type": "STRING",
-          "links": null
-        },
-        {
-          "name": "output_image_2_path",
-          "type": "STRING",
-          "links": null
-        },
-        {
-          "name": "output_image_3_path",
-          "type": "STRING",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "HaiperText2Image"
-      },
-      "widgets_values": [
-        "a boy is smiling",
-        "bad, slow",
-        1083,
-        "randomize",
-        "16:9",
-        720,
-        false,
-        true
-      ]
-    },
-    {
       "id": 2,
       "type": "VHS_LoadImagesPath",
       "pos": [
@@ -358,7 +295,7 @@
       ],
       "size": [
         300.1227111816406,
-        187.67401123046875
+        246
       ],
       "flags": {},
       "order": 7,
@@ -385,7 +322,7 @@
       ],
       "size": [
         297.2323303222656,
-        196.14889526367188
+        246
       ],
       "flags": {},
       "order": 6,
@@ -412,7 +349,7 @@
       ],
       "size": [
         289.838623046875,
-        198.70523071289062
+        246
       ],
       "flags": {},
       "order": 5,
@@ -439,7 +376,7 @@
       ],
       "size": [
         307.3887023925781,
-        193.6510467529297
+        246
       ],
       "flags": {},
       "order": 8,
@@ -456,6 +393,69 @@
         "Node name for S&R": "PreviewImage"
       },
       "widgets_values": []
+    },
+    {
+      "id": 1,
+      "type": "HaiperText2Image",
+      "pos": [
+        370,
+        243
+      ],
+      "size": [
+        315,
+        306
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "output_image_dir_path",
+          "type": "STRING",
+          "links": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "output_image_0_path",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "output_image_1_path",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "output_image_2_path",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "output_image_3_path",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "HaiperText2Image"
+      },
+      "widgets_values": [
+        "a girl is smiling",
+        "bad, slow",
+        1115,
+        "randomize",
+        "16:9",
+        720,
+        false,
+        true
+      ]
     }
   ],
   "links": [
@@ -530,8 +530,8 @@
     "ds": {
       "scale": 0.8264462809917354,
       "offset": [
-        -22.57561434659083,
-        88.04004545454586
+        -23.436623157464044,
+        48.06179176040323
       ]
     }
   },
