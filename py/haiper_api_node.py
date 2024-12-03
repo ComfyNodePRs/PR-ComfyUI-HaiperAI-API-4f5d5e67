@@ -9,16 +9,14 @@ import torch
 import shutil
 import numpy as np
 import comfy
-from . import M2Mtoken
 from dotenv import load_dotenv
 import os
 
 # Load the .env file
 load_dotenv()
 
-# Get the client_id and client_secret
-client_id = os.getenv('CLIENT_ID')
-client_secret = os.getenv('CLIENT_SECRET')
+# Get haiper key
+haiper_key = os.getenv('HAIPER_KEY')
 
 class I2VPipelineNode:
     def __init__(self):
@@ -168,7 +166,7 @@ def get_video_by_i2v_pipeline(prompt, source_image, duration, seed, resolution, 
 
     try:
         # Replace with your actual API endpoint
-        api_url = 'https://api1.haiper.ai/v1/jobs/gen2/image2video'
+        api_url = 'https://api.haiper.ai/v1/jobs/gen2/image2video'
           
         payload = json.dumps({
             "prompt": prompt,  # Use the prompt provided by the user
@@ -185,13 +183,8 @@ def get_video_by_i2v_pipeline(prompt, source_image, duration, seed, resolution, 
             "is_enable_prompt_enhancer": is_enable_prompt_enhancer
         })
 
-        # Get the access token
-        access_token = M2Mtoken.get_token(client_id, client_secret)
         headers = {
-            'x-vision-env': 'pro',
-            'x-haiper-client': 'public',
-            'x-haiper-auth': 'auth0',
-            'authorization': f'Bearer {access_token}',
+            'authorization': f'Bearer {haiper_key}',
             'content-type': 'application/json'
         }
       
@@ -201,7 +194,7 @@ def get_video_by_i2v_pipeline(prompt, source_image, duration, seed, resolution, 
         # Poll the status until the video is ready
         while True:
             time.sleep(20)  # Wait for 20 seconds before checking the status
-            status_url = f'https://api1.haiper.ai/v1/jobs/{generation_id}/status'
+            status_url = f'https://api.haiper.ai/v1/jobs/{generation_id}/status'
             status_response = requests.request("GET", status_url, headers=headers)
             status_data = status_response.json().get('value')
             print(status_data)
@@ -213,7 +206,7 @@ def get_video_by_i2v_pipeline(prompt, source_image, duration, seed, resolution, 
 
             if status == 'succeed':
                 # Get watermark free video url
-                get_watermark_free_video_url = f'https://api1.haiper.ai/v1/creation/{generation_id}/watermark-free-url'
+                get_watermark_free_video_url = f'https://api.haiper.ai/v1/creation/{generation_id}/watermark-free-url'
                 url_response = requests.request("POST", get_watermark_free_video_url, headers=headers).json()
                 watermark_free_url = url_response['value']['url']
 
@@ -240,7 +233,7 @@ def get_video_by_t2v_pipeline(prompt, negative_prompt, seed, aspect_ratio, resol
 
     try:
         # Replace with your actual API endpoint
-        api_url = 'https://api1.haiper.ai/v1/jobs/gen2/text2video'
+        api_url = 'https://api.haiper.ai/v1/jobs/gen2/text2video'
 
         payload = json.dumps({
             "prompt": prompt,
@@ -256,13 +249,8 @@ def get_video_by_t2v_pipeline(prompt, negative_prompt, seed, aspect_ratio, resol
             "is_enable_prompt_enhancer": is_enable_prompt_enhancer
         })
 
-        # Get the access token
-        access_token = M2Mtoken.get_token(client_id, client_secret)
         headers = {
-            'x-vision-env': 'pro',
-            'x-haiper-client': 'public',
-            'x-haiper-auth': 'auth0',
-            'authorization': f'Bearer {access_token}',
+            'authorization': f'Bearer {haiper_key}',
             'content-type': 'application/json'
         }
 
@@ -272,7 +260,7 @@ def get_video_by_t2v_pipeline(prompt, negative_prompt, seed, aspect_ratio, resol
         # Poll the status until the video is ready
         while True:
             time.sleep(20)  # Wait for 20 seconds before checking the status
-            status_url = f'https://api1.haiper.ai/v1/jobs/{generation_id}/status'
+            status_url = f'https://api.haiper.ai/v1/jobs/{generation_id}/status'
             status_response = requests.request("GET", status_url, headers=headers)
             status_data = status_response.json().get('value')
             print(status_data)
@@ -284,7 +272,7 @@ def get_video_by_t2v_pipeline(prompt, negative_prompt, seed, aspect_ratio, resol
 
             if status == 'succeed':
                 # Get watermark free video url
-                generate_watermark_free_video_url = f'https://api1.haiper.ai/v1/creation/{generation_id}/watermark-free-url'
+                generate_watermark_free_video_url = f'https://api.haiper.ai/v1/creation/{generation_id}/watermark-free-url'
                 url_response = requests.request("POST", generate_watermark_free_video_url, headers=headers).json()
                 watermark_free_url = url_response['value']['url']
 
@@ -311,7 +299,7 @@ def get_video_by_t2i_pipeline(prompt, negative_prompt, seed, aspect_ratio, resol
 
     try:
         # Replace with your actual API endpoint
-        api_url = 'https://api1.haiper.ai/v1/jobs/gen2/text2image'
+        api_url = 'https://api.haiper.ai/v1/jobs/gen2/text2image'
 
         payload = json.dumps({
             "prompt": prompt,
@@ -325,13 +313,8 @@ def get_video_by_t2i_pipeline(prompt, negative_prompt, seed, aspect_ratio, resol
             "is_enable_prompt_enhancer": is_enable_prompt_enhancer
         })
 
-        # Get the access token
-        access_token = M2Mtoken.get_token(client_id, client_secret)
         headers = {
-            'x-vision-env': 'pro',
-            'x-haiper-client': 'public',
-            'x-haiper-auth': 'auth0',
-            'authorization': f'Bearer {access_token}',
+            'authorization': f'Bearer {haiper_key}',
             'content-type': 'application/json'
         }
 
@@ -341,7 +324,7 @@ def get_video_by_t2i_pipeline(prompt, negative_prompt, seed, aspect_ratio, resol
         # Poll the status until the video is ready
         while True:
             time.sleep(20)  # Wait for 20 seconds before checking the status
-            status_url = f'https://api1.haiper.ai/v1/jobs/{generation_id}/status'
+            status_url = f'https://api.haiper.ai/v1/jobs/{generation_id}/status'
             status_response = requests.request("GET", status_url, headers=headers)
             status_data = status_response.json().get('value')
             print(status_data)
@@ -352,7 +335,7 @@ def get_video_by_t2i_pipeline(prompt, negative_prompt, seed, aspect_ratio, resol
             pbar.update_absolute(math.ceil(progress * 100), 100)
 
             if status == 'succeed':
-                get_creation_detail_url = f'https://api1.haiper.ai/v1/creation/{generation_id}'
+                get_creation_detail_url = f'https://api.haiper.ai/v1/creation/{generation_id}'
                 # Get the image URLs
                 gen_response = requests.request("GET", get_creation_detail_url, headers=headers, data=payload).json()
                 output_image_0_url = gen_response['value']["outputs"][0]['media_url']
