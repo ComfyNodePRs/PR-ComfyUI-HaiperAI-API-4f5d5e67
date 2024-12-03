@@ -78,4 +78,4 @@ For more information about the Haiper AI API, see [Haiper AI API Documentation](
 
 ## Pricing
 
-For pricing, see [Haiper AI Pricing](https://haiper.ai/haiper-api).
+For pricing, see [Haiper AI Pricing](https://haiper.ai/enterprise-api).
