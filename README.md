@@ -8,7 +8,7 @@ This is a custom node that allows you to use the Haiper AI API in ComfyUI. Haipe
 
 1. You need to have HAIPER_KEY. Get one [here](https://haiper.ai/haiper-api).
 2. You need to provide an image URL as input to perform image-to-video generation. As a recommendation, you can use [ImgBB](https://api.imgbb.com/) to generate image URLs.
-3. You need to carefully read the [API Documentation]((https://docs.haiper.ai/api-reference/authentication)) to understand how to configure the parameters.
+3. You need to carefully read the [API Documentation]((https://docs.haiper.ai/api-reference)) to understand how to configure the parameters.
 
 ## Installation
 
@@ -74,7 +74,7 @@ For examples, see [workflows folder](./workflows). To use, you need to install [
 
 ## API Documentation
 
-For more information about the Haiper AI API, see [Haiper AI API Documentation](https://docs.haiper.ai/api-reference/authentication).
+For more information about the Haiper AI API, see [Haiper AI API Documentation](https://docs.haiper.ai/api-reference).
 
 ## Pricing
 
