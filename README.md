@@ -1,6 +1,6 @@
 # ComfyUI-HaiperAI-API
-<p align="center">
-  <img src="./assets/haiper_logo.png" alt="HaiperAI Logo" width="200">
+<p align="left">
+  <img src="./assets/haiper_logo.png" alt="HaiperAI Logo" width="120">
 </p>
 
 This is a custom node that allows you to use the Haiper AI API in ComfyUI. Haiper AI API is based on top of [Haiper AI](https://haiper.ai/), which is a video generation model developed by Haiper.
@@ -21,7 +21,7 @@ This is a custom node that allows you to use the Haiper AI API in ComfyUI. Haipe
    git clone https://github.com/Haiper-ai/ComfyUI-HaiperAI-API.git
    ```
    The path should be `ComfyUI/custom_nodes/ComfyUI-HaiperAI-API/*`, where `*` represents all the files in this repo.
-  
+
 3. Install the dependencies:
 
   - If you are using Windows (ComfyUI portable) run: `.\python_embeded\python.exe -m pip install -r ComfyUI\custom_nodes\ComfyUI-HaiperAI-API\requirements.txt`
