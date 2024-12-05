@@ -45,7 +45,7 @@ class I2VPipelineNode:
         return {
             "required": {
                 "prompt": ("STRING", {"default": "add prompt here", "display": "text"}),
-                "source_image": ("STRING", {"default": "add source image url here", "display": "text"}),
+                "source_image": ("IMAGE",),
             },
             "optional": {
                 "duration": ("INT", {"default": 6, "min": 1, "max": 6, "step": 1, "display": "number"}),
@@ -69,6 +69,8 @@ class I2VPipelineNode:
         directory = f"/tmp/{random_id}/"
         os.makedirs(directory, exist_ok=True)
         output_path = os.path.join(directory, "output-i2v.mp4")
+
+        source_image = image2base64(source_image[0])
 
         # Use the user-defined prompt instead of a hardcoded prompt
         run_status = get_video_by_i2v_pipeline(prompt, source_image, duration, seed, resolution, is_public, is_enable_prompt_enhancer, guidance_scale, output_path)
