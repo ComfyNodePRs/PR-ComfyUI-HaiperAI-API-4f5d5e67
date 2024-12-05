@@ -11,12 +11,27 @@ import numpy as np
 import comfy
 from dotenv import load_dotenv
 import os
+import base64
+import io
 
 # Load the .env file
 load_dotenv()
 
 # Get haiper key
 haiper_key = os.getenv('HAIPER_KEY')
+
+def image2base64(image):
+    image = 255.0 * image.cpu().numpy()
+    image = Image.fromarray(np.clip(image, 0, 255).astype(np.uint8))
+
+    # Save PIL Image to buffer
+    buffer = io.BytesIO()
+    image.save(buffer, format="PNG")
+    buffer.seek(0)
+
+    base64_image = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    return "data:image/png;base64," + base64_image
+
 
 class I2VPipelineNode:
     def __init__(self):
@@ -171,8 +186,8 @@ class KFCPipelineNode:
         """
         return {
             "required": {
-                "frame_1": ("STRING", {"default": "add frame 1 url here", "display": "text"}),
-                "frame_2": ("STRING", {"default": "add frame 2 url here", "display": "text"}),
+                "frame_1": ("IMAGE",),
+                "frame_2": ("IMAGE",),
                 "frame_indices_str": ("STRING", {"default": "0, 31"}),
                 "image_width": ("INT", {"default": 1280, "step": 1, "display": "number"}),
                 "image_height": ("INT", {"default": 720, "step": 1, "display": "number"}),
@@ -183,10 +198,10 @@ class KFCPipelineNode:
                 "duration": ("INT", {"default": 4, "step": 1, "display": "number"}),
             },
             "optional": {
-                "frame_3": ("STRING", {"default": "", "display": "text"}),
-                "frame_4": ("STRING", {"default": "", "display": "text"}),
-                "frame_5": ("STRING", {"default": "", "display": "text"}),
-                "frame_6": ("STRING", {"default": "", "display": "text"}),
+                "frame_3": ("IMAGE",),
+                "frame_4": ("IMAGE",),
+                "frame_5": ("IMAGE",),
+                "frame_6": ("IMAGE",),
             }
         }
 
@@ -200,11 +215,11 @@ class KFCPipelineNode:
     def run(self, frame_1, frame_2, frame_indices_str, image_width, image_height, is_public, prompt, negative_prompt, seed, duration, frame_3=None, frame_4=None, frame_5=None, frame_6=None):
         # Convert the frame indices string to a list of integers
         frame_indices = [int(item.strip()) for item in frame_indices_str.split(",")]
-        print("frame_1:"+frame_1)
-        print("frame_2:"+frame_2)
-        print("frame_3:"+frame_3)
-        frames = [frame_1, frame_2, frame_3, frame_4, frame_5, frame_6]
-        source_images = [frame for frame in frames if frame != ""]
+
+        frames = [frame[0] for frame in [frame_1, frame_2, frame_3, frame_4, frame_5, frame_6] if frame is not None]
+        source_images = []
+        for frame in frames:
+            source_images.append(image2base64(frame))
 
         # Check that the number of source_images matches the frame indices
         if len(source_images) != len(frame_indices):
