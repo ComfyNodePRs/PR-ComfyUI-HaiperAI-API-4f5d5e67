@@ -7,8 +7,7 @@ This is a custom node that allows you to use the Haiper AI API in ComfyUI. Haipe
 ## Requirements
 
 1. You need to have HAIPER_KEY. Get one [here](https://haiper.ai/haiper-api).
-2. You need to provide an image URL as input to perform image-to-video generation. As a recommendation, you can use [ImgBB](https://api.imgbb.com/) to generate image URLs.
-3. You need to carefully read the [API Documentation](https://docs.haiper.ai/api-reference) to understand how to configure the parameters.
+2. You need to carefully read the [API Documentation](https://docs.haiper.ai/api-reference) to understand how to configure the parameters.
 
 ## Installation
 
@@ -29,20 +28,9 @@ This is a custom node that allows you to use the Haiper AI API in ComfyUI. Haipe
 
 4. You need to put HAIPER_KEY in the `.env` file.
 
-5. You need to put IMGBB_KEY in the `.env` file.
-
-6. Start ComfyUI and enjoy using the Haiper AI API node!
+5. Start ComfyUI and enjoy using the Haiper AI API node!
 
 ## Nodes
-
-### ImgBB Upload
-
-This node is used to upload an image to ImgBB and return the URL. We need this because Haiper API currently only supports image urls as input.
-To use this node, you need to have an ImgBB API key. Create an account and get one [here](https://api.imgbb.com/).
-
-<p align="left">
-  <img src="./assets/ImgBBUpload.png" alt="HaiperAI Image2Video" width="350">
-</p>
 
 ### Haiper Image to Video
 
@@ -67,6 +55,15 @@ This node is used to generate four images from a text prompt.
 <p align="left">
   <img src="./assets/Text2Image.png" alt="HaiperAI Text2Video" width="800">
 </p>
+
+### Haiper Keyframe Conditioning
+
+This node is designed to control video generation through keyframe-based conditioning.
+
+<p align="left">
+  <img src="./assets/KeyframeConditioning.png" alt="HaiperAI Text2Video" width="800">
+</p>
+
 
 ## Examples
 
