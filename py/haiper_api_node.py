@@ -160,6 +160,69 @@ class T2IPipelineNode:
         else:
             raise RuntimeError("Run image generation failed")
 
+class KFCPipelineNode:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(s):
+        """
+        Return a dictionary which contains config for all input fields.
+        """
+        return {
+            "required": {
+                "frame_1": ("STRING", {"default": "add frame 1 url here", "display": "text"}),
+                "frame_2": ("STRING", {"default": "add frame 2 url here", "display": "text"}),
+                "frame_indices_str": ("STRING", {"default": "0, 31"}),
+                "image_width": ("INT", {"default": 1280, "step": 1, "display": "number"}),
+                "image_height": ("INT", {"default": 720, "step": 1, "display": "number"}),
+                "is_public": ("BOOLEAN", {"default": False}),
+                "prompt": ("STRING", {"default": "a smooth consecutive video"}),
+                "negative_prompt": ("STRING", {"default": "bad, slow"}),
+                "seed": ("INT", {"default": -1, "step": 1, "display": "number"}),
+                "duration": ("INT", {"default": 4, "step": 1, "display": "number"}),
+            },
+            "optional": {
+                "frame_3": ("STRING", {"default": "", "display": "text"}),
+                "frame_4": ("STRING", {"default": "", "display": "text"}),
+                "frame_5": ("STRING", {"default": "", "display": "text"}),
+                "frame_6": ("STRING", {"default": "", "display": "text"}),
+            }
+        }
+
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("output_video_path",)
+
+    FUNCTION = "run"
+
+    CATEGORY = "haiper"
+
+    def run(self, frame_1, frame_2, frame_indices_str, image_width, image_height, is_public, prompt, negative_prompt, seed, duration, frame_3=None, frame_4=None, frame_5=None, frame_6=None):
+        # Convert the frame indices string to a list of integers
+        frame_indices = [int(item.strip()) for item in frame_indices_str.split(",")]
+        print("frame_1:"+frame_1)
+        print("frame_2:"+frame_2)
+        print("frame_3:"+frame_3)
+        frames = [frame_1, frame_2, frame_3, frame_4, frame_5, frame_6]
+        source_images = [frame for frame in frames if frame != ""]
+
+        # Check that the number of source_images matches the frame indices
+        if len(source_images) != len(frame_indices):
+            raise ValueError("Source Images need to align with the length of Frame Indices")
+
+        random_id = uuid4()
+        directory = f"/tmp/{random_id}/"
+        os.makedirs(directory, exist_ok=True)
+        output_path = os.path.join(directory, "output.mp4")
+
+        # Use the user-defined prompt instead of a hardcoded prompt
+        run_status = get_video_by_kfc_pipeline(source_images, frame_indices, image_width, image_height, is_public, prompt, negative_prompt, seed, duration, output_path)
+
+        if run_status:
+            return (output_path,)
+        else:
+            raise RuntimeError("Run video generation failed")
+
 def get_video_by_i2v_pipeline(prompt, source_image, duration, seed, resolution, is_public, is_enable_prompt_enhancer, guidance_scale, output_path):
     pbar = comfy.utils.ProgressBar(100)
     pbar.update_absolute(0, 100)
@@ -360,6 +423,71 @@ def get_video_by_t2i_pipeline(prompt, negative_prompt, seed, aspect_ratio, resol
 
             elif status == 'processing' or status == 'pending' or status == 'post_processing':
                 print(f"Images are still processing (Job ID: {generation_id}). Waiting...")
+                continue
+            else:
+                print(f"Unexpected status '{status}'. Exiting.")
+                return False
+
+    except Exception as error:
+        print(error)
+
+
+def get_video_by_kfc_pipeline(source_images, frame_indices, image_width, image_height, is_public, prompt, negative_prompt, seed, duration, output_path):
+    pbar = comfy.utils.ProgressBar(100)
+    pbar.update_absolute(0, 100)
+
+    try:
+        api_url = 'https://api.haiper.ai/v1/jobs/gen2/afc'
+
+        payload = json.dumps({
+            "config": {
+                "source_images": source_images,
+                "frame_indices": frame_indices,
+                "input_width": image_width,
+                "input_height": image_height,
+            },
+            "is_public": is_public,
+            "prompt": prompt,  # Use the prompt provided by the user
+            "negative_prompt": negative_prompt,
+            "settings": {
+                "seed": seed,
+                "duration": duration,
+            }
+        })
+
+        headers = {
+            'authorization': f'Bearer {haiper_key}',
+            'content-type': 'application/json'
+        }
+
+        gen_response = requests.request("POST", api_url, headers=headers, data=payload).json()
+        generation_id = gen_response['value']["generation_id"]
+
+        # Poll the status until the video is ready
+        while True:
+            time.sleep(20)  # Wait for 20 seconds before checking the status
+            status_url = f'https://api.haiper.ai/v1/jobs/{generation_id}/status'
+            status_response = requests.request("GET", status_url, headers=headers)
+            status_data = status_response.json().get('value')
+
+            status = status_data.get('status')
+            progress = status_data.get('progress', 0)
+
+            pbar.update_absolute(math.ceil(progress * 100), 100)
+            if status == 'succeed':
+                # Get watermark free video url
+                generate_watermark_free_video_url = f'https://api.haiper.ai/v1/creation/{generation_id}/watermark-free-url'
+                url_response = requests.request("POST", generate_watermark_free_video_url, headers=headers).json()
+                watermark_free_url = url_response['value']['url']
+                # Download watermark free video from URL
+                video_response = requests.get(watermark_free_url, stream=True)
+                with open(output_path, 'wb') as video_file:
+                    shutil.copyfileobj(video_response.raw, video_file)
+
+                return True
+
+            elif status == 'processing' or status == 'pending' or status == 'post_processing':
+                print(f"Video is still processing (Job ID: {generation_id}). Waiting...")
                 continue
             else:
                 print(f"Unexpected status '{status}'. Exiting.")
