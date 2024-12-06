@@ -30,6 +30,11 @@ This is a custom node that allows you to use the Haiper AI API in ComfyUI. Haipe
 
 5. Start ComfyUI and enjoy using the Haiper AI API node!
 
+### Installing with ComfyUI-Manager
+
+1. Open ComfyUI-Manager and install the Haiper AI API node (ComfyUI-HaiperAI-API).
+
+
 ## Nodes
 
 ### Haiper Image to Video
