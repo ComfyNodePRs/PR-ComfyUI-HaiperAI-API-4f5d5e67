@@ -3,19 +3,20 @@
   <img src="./assets/haiper_logo.png" alt="HaiperAI Logo" width="120">
 </p>
 
-This is a custom node that allows you to use the Haiper AI API in ComfyUI. Haiper AI API is based on top of [Haiper AI](https://haiper.ai/), which is a video generation model developed by Haiper.
+This is custom nodes allow you to access [Haiper AI](https://haiper.ai/) in ComfyUI with [Haiper AI API](https://docs.haiper.ai/api-reference/).
+
 ## Requirements
 
-1. You need to have **HAIPER_KEY**. Get one [here](https://haiper.ai/haiper-api).
-2. You need to carefully read the [API Documentation](https://docs.haiper.ai/api-reference) to understand how to configure the parameters.
+1. Get your own **HAIPER_KEY** from [Haiper API](https://haiper.ai/haiper-api).
+2. Check out the [API Documentation](https://docs.haiper.ai/api-reference) to understand how to set up the parameters.
 
 ## Installation
 
 ### Installing manually
 
-1. Navigate to the `ComfyUI/custom_nodes` directory.
+1. Go to the `ComfyUI/custom_nodes` directory.
 
-2. Clone this repository:
+2. Clone the repository:
    ```
    git clone https://github.com/Haiper-ai/ComfyUI-HaiperAI-API.git
    ```
@@ -23,16 +24,16 @@ This is a custom node that allows you to use the Haiper AI API in ComfyUI. Haipe
 
 3. Install the dependencies:
 
-  - If you are using Windows (ComfyUI portable) run: `.\python_embeded\python.exe -m pip install -r ComfyUI\custom_nodes\ComfyUI-HaiperAI-API\requirements.txt`
-  - If you are using Linux or MacOS, run: `cd ComfyUI-HaiperAI-API && pip install -r requirements.txt` to install the dependencies.
+- Linux or macOS: `cd ComfyUI-HaiperAI-API && pip install -r requirements.txt`
+  - Windows (ComfyUI portable): `.\python_embeded\python.exe -m pip install -r ComfyUI\custom_nodes\ComfyUI-HaiperAI-API\requirements.txt`
 
-4. You need to put HAIPER_KEY in the `.env` file.
+4. Set HAIPER_KEY in the `.env` file. (Don't share the .env file to public)
 
-5. Start ComfyUI and enjoy using the Haiper AI API node!
+5. Start ComfyUI and enjoy your creation.
 
 ### Installing with ComfyUI-Manager
 
-1. Open ComfyUI-Manager and install the Haiper AI API node (ComfyUI-HaiperAI-API).
+1. Open ComfyUI-Manager and install the Haiper AI API node `ComfyUI-HaiperAI-AP`.
 
 
 ## Nodes
@@ -72,12 +73,12 @@ This node is designed to control video generation through keyframe-based conditi
 
 ## Examples
 
-For examples, see [workflows folder](./workflows). To use, you need to install [ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite) first, then download the workflow json and import it into ComfyUI.
+Check out [workflows folder](./workflows). You need to install [ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite) first, then download the workflow json and import it into ComfyUI.
 
 ## API Documentation
 
-For more information about the Haiper AI API, see [Haiper AI API Documentation](https://docs.haiper.ai/api-reference).
+For more information about the Haiper AI API: [Haiper AI API Documentation](https://docs.haiper.ai/api-reference).
 
 ## Pricing
 
-For pricing, see [Haiper AI Pricing](https://haiper.ai/enterprise-api).
+Pricing of API on Haiper AI: [Haiper AI Pricing](https://haiper.ai/enterprise-api).
